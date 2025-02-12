@@ -1,0 +1,2 @@
+# gurknix
+My nix config
