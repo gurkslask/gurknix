@@ -61,17 +61,21 @@
   };
   home.packages = with pkgs; [
     #(nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    gimp
+    sshpass
     mixxx
     spotdl
     ansible
-    beekeeper-studio
+    #beekeeper-studio
     steam
     tailscale
     chromium
     spotify
     ventoy
+    # SQLc
+    sqlc
     #ESP-Home
-    esphome
+    #esphome
     # MQTT
     mqttui
     go

@@ -61,7 +61,7 @@
     LC_TIME = "sv_SE.UTF-8";
   };
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
   # Disable touchpad while typing
   services.libinput.touchpad.disableWhileTyping = true;
 
@@ -70,7 +70,8 @@
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -78,7 +79,8 @@
     variant = "";
   };
   #Displaysink
-  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+  #services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+  services.xserver.videoDrivers = [  "modesetting" ];
 
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -89,7 +91,7 @@
   # services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -115,7 +117,7 @@
     shell = pkgs.fish;
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
-      kate
+      kdePackages.kate
       firefox
       neovim
       hugo
@@ -142,6 +144,9 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+  "beekeeper-studio-5.1.5"
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -150,6 +155,7 @@
   #  wget
   # plasma-manager
     gcc
+    linode-cli
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
