@@ -66,6 +66,7 @@
     mixxx
     spotdl
     ansible
+    tmux
     #beekeeper-studio
     steam
     tailscale
