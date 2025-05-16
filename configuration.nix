@@ -156,6 +156,8 @@
   # plasma-manager
     gcc
     linode-cli
+    typescript-language-server
+    beekeeper-studio
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -208,8 +210,8 @@
         CPU_MAX_PERF_ON_BAT = 20;
 
        #Optional helps save long term battery health
-       START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
-       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
+       START_CHARGE_THRESH_BAT0 = 60; # 40 and below it starts to charge
+       STOP_CHARGE_THRESH_BAT0 = 85; # 80 and above it stops charging
 
       };
   };

@@ -57,6 +57,7 @@
       gruvbox-material
       mini-nvim
       go-nvim
+      typescript-tools-nvim
     ];
   };
   home.packages = with pkgs; [
@@ -67,7 +68,6 @@
     spotdl
     ansible
     tmux
-    #beekeeper-studio
     steam
     tailscale
     chromium
