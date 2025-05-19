@@ -15,9 +15,17 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { 
+  	self, 
+	nixpkgs,
+	...
+  } @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
+      # nixosModules = import ./modules/home-manager;
+      # Reusable home-manager modules you might want to export
+      # These are usually stuff you would upstream into home-manager
+      # homeManagerModules = import ./modules/home-manager;
       modules = [
         ./configuration.nix
         inputs.home-manager.nixosModules.default
