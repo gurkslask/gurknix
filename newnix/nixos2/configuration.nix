@@ -102,37 +102,11 @@
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   programs.fish.enable = true;
   
   users.groups.ubridge = {};
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.alex = {
-    # isNormalUser = true;
-    # description = "alex";
-    # shell = pkgs.fish;
-    # extraGroups = [ "networkmanager" "wheel" "ubridge" ];
-    # packages = with pkgs; [
-      # firefox
-      # kdePackages.kate
-      # neovim
-      # hugo
-      # git
-      # go
-      # fzf
-    #  thunderbird
-    # ];
-  # };
-
-  # home-manager = {
-     # extraSpecialArgs = { inherit inputs; };
-     # users = {
-     	# alex = import ./home.nix;
-     # };
-  # };
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
     # FIXME: Replace with your username
@@ -165,17 +139,8 @@
     dynamips
     putty
     vpcs
-    # bar
-    # waybar
-    # notifications
-    # dunst
-    # libnotify
-    # wallpaper
-    # swww
-    # terminal
-    # kitty
-    # app-launcher
-    rofi-wayland
+    gcc
+    linode-cli
     # File manager
     # dolphin
     # Network manager
@@ -184,6 +149,91 @@
     tlp
     # Bluetooth
     # blueman
+    gimp
+    sshpass
+    mixxx
+    spotdl
+    ansible
+    tmux
+    steam
+    tailscale
+    chromium
+    spotify
+    ventoy
+    # SQLc
+    sqlc
+    #ESP-Home
+    #esphome
+    # MQTT
+    mqttui
+    go
+    python3
+    hugo
+    vscodium
+    neofetch
+    nnn # terminal file manager
+    gotools
+
+    # archives
+    zip
+    xz
+    unzip
+    p7zip
+
+    # utils
+    ripgrep # recursively searches directories for a regex pattern
+    jq # A lightweight and flexible command-line JSON processor
+    yq-go # yaml processor https://github.com/mikefarah/yq
+    eza # A modern replacement for ‘ls’
+    fzf # A command-line fuzzy finder
+
+    # networking tools
+    mtr # A network diagnostic tool
+    iperf3
+    dnsutils  # `dig` + `nslookup`
+    ldns # replacement of `dig`, it provide the command `drill`
+    aria2 # A lightweight multi-protocol & multi-source command-line download utility
+    socat # replacement of openbsd-netcat
+    nmap # A utility for network discovery and security auditing
+    ipcalc  # it is a calculator for the IPv4/v6 addresses
+
+    # misc
+    cowsay
+    file
+    which
+    tree
+    gnused
+    gnutar
+    gawk
+    zstd
+    gnupg
+
+    # nix related
+    #
+    # it provides the command `nom` works just like `nix`
+    # with more details log output
+    nix-output-monitor
+
+    # productivity
+    hugo # static site generator
+    glow # markdown previewer in terminal
+
+    btop  # replacement of htop/nmon
+    iotop # io monitoring
+    iftop # network monitoring
+
+    # system call monitoring
+    strace # system call monitoring
+    ltrace # library call monitoring
+    lsof # list open files
+
+    # system tools
+    sysstat
+    lm_sensors # for `sensors` command
+    ethtool
+    pciutils # lspci
+    usbutils # lsusb
+
   ];
   # xdg.portal.enable = true;
   # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -221,5 +271,49 @@
      # userName = "Alexander Svensson";
      # userEmail = "gurkslask@gmail.com";
   };
+  # Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
+  services.tailscale.enable = true;
+  # Docker
+  virtualisation.docker.enable = true;
+  # Enable touchpad support (enabled default in most desktopManager).
+  services.libinput.enable = true;
+  # Disable touchpad while typing
+  services.libinput.touchpad.disableWhileTyping = true;
+  # Install firefox.
+  programs.firefox.enable = true;
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+  "beekeeper-studio-5.1.5"
+  ];
 
+  services.power-profiles-daemon.enable = false;
+  powerManagement.enable = true;
+  services.thermald.enable = true;
+  services.tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+        CPU_MIN_PERF_ON_AC = 0;
+        CPU_MAX_PERF_ON_AC = 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 20;
+
+       #Optional helps save long term battery health
+       START_CHARGE_THRESH_BAT0 = 60; # 40 and below it starts to charge
+       STOP_CHARGE_THRESH_BAT0 = 85; # 80 and above it stops charging
+
+      };
+  };
 }
