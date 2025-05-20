@@ -22,6 +22,7 @@
   myHome = {
     nvim = {
       enable = true;
+      enabbdsa = true;
     };
   };
 

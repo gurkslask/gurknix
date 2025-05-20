@@ -3,8 +3,8 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 # --- Install Home manager
-# sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz home-manager
-# sudo nix-channel --update
+#sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz home-manager
+#sudo nix-channel --update
 
 { config, pkgs, inputs, ...  }:
 
@@ -15,6 +15,7 @@
       # ./main-user.nix
       inputs.home-manager.nixosModules.default
     ];
+    
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -317,4 +318,5 @@
 
       };
   };
+ 
 }
