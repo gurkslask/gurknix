@@ -276,19 +276,20 @@
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    # localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
   services.tailscale.enable = true;
   # Docker
   virtualisation.docker.enable = true;
   # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
-  # Disable touchpad while typing
-  services.libinput.touchpad.disableWhileTyping = true;
+  # services.libinput = {
+    # enable = true;
+    # touchpad = {
+      # disableWhileTyping = true;
+    # };
+  # };
   # Install firefox.
   programs.firefox.enable = true;
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
   "beekeeper-studio-5.1.5"
   ];

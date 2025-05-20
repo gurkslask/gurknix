@@ -3,7 +3,7 @@
     # ./cli.nix
     # ./devops.nix
     # ./gnome
-    ./neovim.nix
+    ./nvim.nix
     # ./non-nixos.nix
     # ./tmux.nix
     # ./zsh.nix
