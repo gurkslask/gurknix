@@ -17,12 +17,12 @@
     # inputs.nix-colors.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
-    ./modules/home-manager/myHome/nvim.nix
+    #./modules/home-manager/myHome/nvim.nix
   ];
   myHome = {
-    nvim = {
+    neovim = {
       enable = true;
-      enabbdsa = true;
+      #enabbdsa = true;
     };
   };
 
@@ -50,11 +50,21 @@
       allowUnfree = true;
     };
   };
-
+  #home.file."${config.xdg.configHome}" = {
+  home.file = {
+    #"$home.homeDirectory" = {
+    "nvim" = {
+      # source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim;
+      source = config.lib.file.mkOutOfStoreSymlink /home/alex/Projects/gurknix/newnix/dotfiles/nvim;
+      #source = ../dotfiles;
+      recursive = false;
+      target = "./.config/nvim";
+    };
+  };
   # TODO: Set your username
   home = {
-    username = "your-username";
-    homeDirectory = "/home/your-username";
+    username = "alex";
+    homeDirectory = "/home/alex";
   };
 
   # Add stuff for your user as you see fit:
@@ -63,7 +73,11 @@
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+    userName = "Alexander Svensson";
+    userEmail = "gurkslask@gmail.com";
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

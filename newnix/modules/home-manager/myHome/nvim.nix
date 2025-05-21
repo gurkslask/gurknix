@@ -17,7 +17,7 @@ in
     programs.neovim = lib.mkMerge [
       {
         enable = true;
-        package = pkgs.neovim-nightly.overrideAttrs (_: { CFLAGS = "-O3"; });
+        #package = pkgs.neovim-nightly.overrideAttrs (_: { CFLAGS = "-O3"; });
         vimAlias = true;
         viAlias = true;
         withNodeJs = true;
@@ -31,7 +31,7 @@ in
           require("config.remaps")
           EOF
         '';
-        plugins = with pkgs.nvimPlugins; [
+        plugins = with pkgs.vimPlugins; [
           {
             plugin = pkgs.unstable.vimPlugins.nvim-treesitter.withAllGrammars;
             type = "lua";
@@ -43,16 +43,16 @@ in
           nvim-treesitter-textobjects
           nvim-ts-rainbow
           {
-            plugin = telescope;
+            plugin = telescope-nvim;
             type = "lua";
             config = ''
               require("config.telescope")
             '';
           }
-          telescope-file-browser
-          plenary
+          telescope-file-browser-nvim
+          plenary-nvim
           {
-            plugin = nvim-tree;
+            plugin = neo-tree-nvim;
             type = "lua";
             config = ''
               require("config.tree")
@@ -60,29 +60,16 @@ in
           }
           nvim-web-devicons
           {
-            plugin = which-key;
+            plugin = which-key-nvim;
             type = "lua";
             config = ''
               vim.api.nvim_set_option("timeoutlen", 300)
               require("which-key").setup({})
             '';
           }
-          {
-            plugin = Comment;
-            type = "lua";
-            config = ''
-              require("config.comment")
-            '';
-          }
           vim-surround
           vim-repeat
-          {
-            plugin = gitsigns;
-            type = "lua";
-            config = ''
-              require("gitsigns").setup()
-            '';
-          }
+
           {
             plugin = dashboard-nvim;
             type = "lua";
@@ -98,29 +85,29 @@ in
             '';
           }
           {
-            plugin = indent-blankline;
+            plugin = indent-blankline-nvim;
             type = "lua";
             config = ''
               require("config.blankline")
             '';
           }
-          lualine
+          lualine-nvim
           nvim-navic
           {
-            plugin = nvim-colorizer;
+            plugin = nvim-colorizer-lua;
             type = "lua";
             config = ''
               require("colorizer").setup()
             '';
           }
           {
-            plugin = dressing;
+            plugin = dressing-nvim;
             type = "lua";
             config = ''
               require("dressing").setup()
             '';
           }
-          popup
+          popup-nvim
         ];
         extraPackages = with pkgs; [
           # Essentials
@@ -262,10 +249,12 @@ in
       })
     ];
 
-    xdg.configFile.nvim = {
-      recursive = true;
-      source = ../../../../dotfiles/nvim;
-    };
+    #xdg.configFile.nvim = {
+      #recursive = true;
+      
+      #source = ../../../dotfiles/nvim;
+      #source = ../../../../dotfiles/nvim;
+    #};
   };
 }
 
