@@ -84,13 +84,7 @@ in
               require("config.theme")
             '';
           }
-          {
-            plugin = indent-blankline-nvim;
-            type = "lua";
-            config = ''
-              require("config.blankline")
-            '';
-          }
+          
           lualine-nvim
           nvim-navic
           {

@@ -55,10 +55,11 @@
     #"$home.homeDirectory" = {
     "nvim" = {
       # source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim;
-      source = config.lib.file.mkOutOfStoreSymlink /home/alex/Projects/gurknix/newnix/dotfiles/nvim;
+      source = config.lib.file.mkOutOfStoreSymlink /home/alex/Projects/gurknix/newnix/dotfiles/nvim/lua;
       #source = ../dotfiles;
       recursive = false;
-      target = "./.config/nvim";
+      force = true;
+      target = "./.config/nvim/lua";
     };
   };
   # TODO: Set your username
