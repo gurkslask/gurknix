@@ -28,7 +28,7 @@
       # homeManagerModules = import ./modules/home-manager;
       modules = [
         ./configuration.nix
-        inputs.home-manager.nixosModules.default
+        #inputs.home-manager.nixosModules.default
 	 #inputs.plasma-manager.homeManagerModules.plasma-manager
       ];
     };
