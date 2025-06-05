@@ -41,7 +41,7 @@ in
           '';
           }
           nvim-treesitter-textobjects
-          nvim-ts-rainbow
+          rainbow-delimiters-nvim
           {
             plugin = telescope-nvim;
             type = "lua";
