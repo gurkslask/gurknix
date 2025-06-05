@@ -22,7 +22,7 @@
   
 
   # Steam
-  programs.steam = {
+  programs.stehttps://support.microsoft.com/en-us/windows/rename-your-windows-device-750bc75d-8ff8-e99a-b9dc-04dff566ae74am = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
