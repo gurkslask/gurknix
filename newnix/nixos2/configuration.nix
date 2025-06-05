@@ -293,6 +293,7 @@
   # Install firefox.
   programs.firefox.enable = true;
   nixpkgs.config.permittedInsecurePackages = [
+  "ventoy-1.1.05"
   "beekeeper-studio-5.1.5"
   ];
 
