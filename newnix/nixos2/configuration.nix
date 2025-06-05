@@ -64,7 +64,10 @@
 
   # Enable the KDE Plasma Desktop Environment.
   # services.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "alex";
+  services.xserver.desktopManager.plasma6.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "se";
@@ -88,7 +91,7 @@
 
   # Enable sound with pipewire.
   # sound.enable = true; Removed
-  hardware.pulseaudio.enable = false;
+  servies.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

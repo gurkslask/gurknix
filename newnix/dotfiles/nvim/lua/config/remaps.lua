@@ -32,3 +32,4 @@ remap("n", "<leader>k", ":m .-2<CR>==", { noremap = true })
 
 -- Command shortcuts
 remap("n", "<leader>F", ":Format<CR>", { noremap = true })
+remap("i", "jj", "<esc>", { noremap = true })
