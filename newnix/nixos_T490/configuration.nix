@@ -37,6 +37,7 @@
 
   networking.hostName = "nixos"; # Define your hostname.
   services.tailscale.enable = true;
+  services.mullvad-vpn.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Docker
@@ -171,6 +172,7 @@
     inputs.home-manager.packages.${pkgs.system}.default
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
+    calibre
     wget
     #gns3
     gns3-server
