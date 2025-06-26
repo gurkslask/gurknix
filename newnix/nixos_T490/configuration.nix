@@ -86,6 +86,7 @@
   services.libinput.touchpad.disableWhileTyping = true;
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  # services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
 
   # Enable the KDE Plasma Desktop Environment.
   # services.displayManager.sddm.enable = true;
@@ -172,6 +173,7 @@
     inputs.home-manager.packages.${pkgs.system}.default
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
+    displaylink
     calibre
     wget
     #gns3
