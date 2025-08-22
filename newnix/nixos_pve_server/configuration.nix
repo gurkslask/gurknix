@@ -22,7 +22,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "pve_nixos"; # Define your hostname.
   services.tailscale.enable = true;
   # services.mullvad-vpn.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

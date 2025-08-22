@@ -70,6 +70,14 @@
 	  #/etc/nixos/configuration.nix
         ];
       };
+      nixos_pve = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          # > Our main nixos configuration file <
+          ./nixos_pve_server/configuration.nix
+	  #/etc/nixos/configuration.nix
+        ];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
