@@ -5,6 +5,10 @@ local navic = require("nvim-navic")
 local common_capabilities = require("cmp_nvim_lsp").default_capabilities()
 common_capabilities.semanticTokensProvider = nil
 
+-- lspconfig.gopls.setup {
+	-- on_attach = on_attach,
+-- }
+
 function lsp.common_on_attach(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -35,6 +39,7 @@ function lsp.common_on_attach(client, bufnr)
 	buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 	buf_set_keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 	buf_set_keymap("n", "<leader>o", [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
+
 	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format({async=true})' ]])
 
 	lsp_signature.on_attach({

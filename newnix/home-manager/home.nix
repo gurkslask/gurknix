@@ -17,11 +17,12 @@
     # inputs.nix-colors.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
-    #./modules/home-manager/myHome/nvim.nix
+    ../modules/home-manager/myHome/nvim.nix
   ];
   myHome = {
     neovim = {
       enable = true;
+      enableLSP = true;
       #enabbdsa = true;
     };
   };

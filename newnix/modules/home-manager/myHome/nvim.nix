@@ -36,7 +36,6 @@ in
             plugin = pkgs.unstable.vimPlugins.nvim-treesitter.withAllGrammars;
             type = "lua";
             config = ''
-
               require("config.treesitter")
           '';
           }
@@ -58,7 +57,7 @@ in
               require("config.tree")
             '';
           }
-          nvim-web-devicons
+          #nvim-web-devicons
           {
             plugin = which-key-nvim;
             type = "lua";
@@ -68,14 +67,14 @@ in
             '';
           }
           vim-surround
-          vim-repeat
+          # vim-repeat
 
           {
-            plugin = dashboard-nvim;
-            type = "lua";
-            config = ''
-              require("config.dashboard")
-            '';
+          plugin = dashboard-nvim;
+          type = "lua";
+          config = ''
+          require("config.dashboard")
+          '';
           }
           {
             plugin = oceanic-next;
@@ -115,7 +114,7 @@ in
       }
 
       (lib.mkIf cfg.enableLSP {
-        plugins = with pkgs.nvimPlugins; [
+        plugins = with pkgs.vimPlugins; [
           (
             let
               lspServers = pkgs.writeText "lsp_servers.json" (builtins.toJSON (import ./lsp_servers.nix { inherit pkgs; }));
@@ -129,17 +128,8 @@ in
               '';
             }
           )
-          lsp_signature
+          lsp_signature-nvim
           nvim-code-action-menu
-          {
-            plugin = yaml-companion;
-            type = "lua";
-            config = ''
-              require("telescope").load_extension("yaml_schema")
-              local cfg = require("yaml-companion").setup({})
-              require("lspconfig")["yamlls"].setup(cfg)
-            '';
-          }
           {
             plugin = nvim-cmp;
             type = "lua";
@@ -153,8 +143,16 @@ in
           cmp-nvim-lua
           cmp_luasnip
           nvim-autopairs
+          # {
+            # plugin = nvim-go;
+            # type = "lua";
+            # config = ''
+              # require('go').setup()
+              # require("config.go")
+              # '';
+          # }
           {
-            plugin = LuaSnip;
+            plugin = luasnip;
             type = "lua";
             config = ''
               require("config.snippets")
@@ -163,7 +161,7 @@ in
           friendly-snippets
           lspkind-nvim
           {
-            plugin = null-ls;
+            plugin = null-ls-nvim;
             type = "lua";
             config = ''
               require("config.language")
@@ -180,7 +178,7 @@ in
           nvim-dap-go
           nvim-dap-python
           {
-            plugin = refactoring;
+            plugin = refactoring-nvim;
             type = "lua";
             config = ''
               require("config.refactoring")
@@ -197,7 +195,6 @@ in
             yamllint
             debugpy
           ]))
-          nodePackages.pyright
 
           # Lua
           unstable.lua-language-server

@@ -49,3 +49,5 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 vim.cmd("filetype indent plugin on")
+-- go
+-- require('go').setup()
