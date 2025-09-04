@@ -160,13 +160,13 @@ in
           }
           friendly-snippets
           lspkind-nvim
-          {
-            plugin = null-ls-nvim;
-            type = "lua";
-            config = ''
-              require("config.language")
-            '';
-          }
+          # {
+          # plugin = null-ls-nvim;
+          # type = "lua";
+          # config = ''
+          # require("config.language")
+          # '';
+          # }
           {
             plugin = nvim-dap;
             type = "lua";
