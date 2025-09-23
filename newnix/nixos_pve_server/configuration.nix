@@ -290,5 +290,12 @@
     # };
   # };
 
+  fileSystems."/mnt/tomoyo" = {
+    device = "192.168.20.210:/zpool1";
+    fsType = "nfs";
+  };
+  # optional, but ensures rpc-statsd is running for on demand mounting
+  boot.supportedFilesystems = [ "nfs" ];
+
  
 }
