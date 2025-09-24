@@ -181,6 +181,8 @@
     displaylink
     calibre
     wget
+    minicom
+    nfs-utils
     #gns3
     gns3-server
     ubridge
@@ -300,8 +302,12 @@
    services.openssh.enable = true;
 
   # Open ports in the firewall.
-   networking.firewall.allowedTCPPorts = [80 22];
-   networking.firewall.allowedUDPPorts = [22];
+  networking.firewall = rec {
+    allowedTCPPorts = [80 22];
+    allowedUDPPorts = [22];
+    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedUDPPortRanges = allowedTCPPortRanges;
+};
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

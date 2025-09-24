@@ -18,8 +18,13 @@
 
     # You can also split up your configuration and import pieces of it here:
     ../modules/home-manager/myHome/nvim.nix
+    ../modules/home-manager/myHome/kdeconnect.nix
+    
   ];
   myHome = {
+    kdeconnect = {
+      enable = true;
+    };
     neovim = {
       enable = true;
       enableLSP = true;
@@ -83,6 +88,7 @@
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
+
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
