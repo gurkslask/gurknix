@@ -191,6 +191,7 @@
     vpcs
     gcc
     linode-cli
+    libreoffice
     # File manager
     # dolphin
     # Network manager
@@ -283,6 +284,10 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    # dwarf fortress
+    dwarf-fortress
+    dfhack
 
   ];
   # xdg.portal.enable = true;
