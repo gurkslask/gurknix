@@ -19,9 +19,13 @@
     # You can also split up your configuration and import pieces of it here:
     ../modules/home-manager/myHome/nvim.nix
     ../modules/home-manager/myHome/kdeconnect.nix
+    ../modules/home-manager/myHome/borg.nix
     
   ];
   myHome = {
+    borg = {
+      enable = true;
+    };
     kdeconnect = {
       enable = true;
     };

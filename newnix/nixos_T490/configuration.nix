@@ -14,6 +14,7 @@
       ./hardware-configuration.nix
       # ./main-user.nix
       inputs.home-manager.nixosModules.default
+      ../modules/nixos/borg.nix
     ];
     
 
@@ -21,6 +22,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Borg
+  services.myborg = {
+    enable = true;
+  };
   
   #Bluetooth
   hardware.bluetooth.enable = true;
@@ -353,7 +358,7 @@
         CPU_MIN_PERF_ON_AC = 0;
         CPU_MAX_PERF_ON_AC = 100;
         CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 20;
+        CPU_MAX_PERF_ON_BAT = 75;
 
        #Optional helps save long term battery health
       # START_CHARGE_THRESH_BAT0 = 60; # 40 and below it starts to charge
