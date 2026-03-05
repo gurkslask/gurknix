@@ -19,13 +19,11 @@
     # You can also split up your configuration and import pieces of it here:
     ../modules/home-manager/myHome/nvim.nix
     ../modules/home-manager/myHome/kdeconnect.nix
-    ../modules/home-manager/myHome/borg.nix
+    ../modules/home-manager/myHome/shell.nix
+
     
   ];
   myHome = {
-    borg = {
-      enable = true;
-    };
     kdeconnect = {
       enable = true;
     };
@@ -88,6 +86,28 @@
     enable = true;
     userName = "Alexander Svensson";
     userEmail = "gurkslask@gmail.com";
+    aliases = {
+      gs = "status";
+      co = "checkout";
+      gc = "commit";
+      glog = "log --oneline --graph --decorate --all";
+    };
+    extraConfig = {
+      init.defaultBranch = "main";
+      core.editor = "nvim";
+    };
+  };
+
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set fish_greeting ""
+    '';
+    shellAliases = {
+      v = "nvim";
+      ls = "eza --icons";
+      nrs = "sudo nixos-rebuild switch";
+    };
   };
 
   # Nicely reload system units when changing configs

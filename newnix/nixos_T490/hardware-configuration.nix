@@ -38,4 +38,13 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  #  Aktivera hårdvaruacceleration för Intel iGPU
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # För Broadwell+ (din CPU ingår här)
+      intel-compute-runtime # Behövs för OpenVINO
+    ];
+  };
 }

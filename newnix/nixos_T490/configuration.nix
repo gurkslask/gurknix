@@ -15,6 +15,7 @@
       # ./main-user.nix
       inputs.home-manager.nixosModules.default
       ../modules/nixos/borg.nix
+      ../modules/nixos/frigate.nix
     ];
     
 
@@ -25,6 +26,12 @@
   # Borg
   services.myborg = {
     enable = true;
+    repoPath = "ssh://kagg@kagg-server/mnt/vg0-filer/backup"; 
+  };
+
+  # Frigate
+  services.myfrigate = {
+    enable = false;
   };
   
   #Bluetooth
@@ -40,7 +47,7 @@
     # localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "jenna"; # Define your hostname.
   services.tailscale.enable = true;
   services.mullvad-vpn.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -142,6 +149,10 @@
     #media-session.enable = true;
   };
 
+  fonts.packages = with pkgs; [
+    pkgs.nerd-fonts.fira-code
+    pkgs.nerd-fonts.jetbrains-mono
+  ];
 
   programs.fish.enable = true;
   
@@ -174,6 +185,8 @@
   nixpkgs.config.permittedInsecurePackages = [
   "beekeeper-studio-5.1.5"
   "ventoy-1.1.05"
+  "frigate-web-0.15.2"
+  "frigate-0.15.2"
   ];
 
 
@@ -183,11 +196,16 @@
     inputs.home-manager.packages.${pkgs.system}.default
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
+    fira-code-nerdfont
+    nerd-fonts.jetbrains-mono
+    grc
     displaylink
     calibre
     wget
     minicom
     nfs-utils
+    # Remmina
+    remmina
     #gns3
     gns3-server
     ubridge
@@ -224,6 +242,7 @@
     mqttui
     go
     python3
+    pyright
     hugo
     vscodium
     neofetch
@@ -278,6 +297,7 @@
     iotop # io monitoring
     iftop # network monitoring
 
+
     # system call monitoring
     strace # system call monitoring
     ltrace # library call monitoring
@@ -289,6 +309,7 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+    lshw
 
     # dwarf fortress
     dwarf-fortress

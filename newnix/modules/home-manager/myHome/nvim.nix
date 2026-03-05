@@ -25,6 +25,7 @@ in
         withRuby = false;
         extraConfig = ''
           let mapleader=" "
+          set clipboard+=unnamedplus
 
           lua <<EOF
           require("config.general")
@@ -236,6 +237,8 @@ in
           gitlint
           terraform-ls
           actionlint
+          wl-clipboard
+          xclip
         ];
       })
     ];
