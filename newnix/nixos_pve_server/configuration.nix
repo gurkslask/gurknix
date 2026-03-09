@@ -294,7 +294,7 @@
     device = "192.168.20.210:/zpool1";
     fsType = "nfs";
   };
-  programs.plex = {
+  services.plex = {
     enable = true;
     openFirewall = true;
   };

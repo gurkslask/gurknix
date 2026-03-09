@@ -62,7 +62,7 @@
         ];
       };
       # FIXME replace with your hostname
-      nixos = nixpkgs.lib.nixosSystem {
+      jenna = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
           # > Our main nixos configuration file <
@@ -100,7 +100,7 @@
           ./home-manager/home_server.nix
         ];
       };
-      "alex@nixos" = home-manager.lib.homeManagerConfiguration {
+      "alex@jenna" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [

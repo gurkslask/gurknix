@@ -1,1 +1,1 @@
-home-manager switch --flake .#alex@nixos
+home-manager switch --flake .#alex@jenna
