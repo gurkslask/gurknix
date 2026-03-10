@@ -16,6 +16,7 @@
       inputs.home-manager.nixosModules.default
       ../modules/nixos/borg.nix
       ../modules/nixos/frigate.nix
+        ../modules/nixos/tailscale.nix
     ];
     
 
@@ -48,8 +49,7 @@
   };
 
   networking.hostName = "jenna"; # Define your hostname.
-  services.tailscale.enable = true;
-  services.mullvad-vpn.enable = true;
+  # services.mullvad-vpn.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Docker
@@ -93,19 +93,23 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
+  services.libinput = {
+    enable = true;
+    touchpad.disableWhileTyping = true;
+  };
   # Disable touchpad while typing
-  services.libinput.touchpad.disableWhileTyping = true;
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
   services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
+  services.displayManager = {
+    autoLogin.enable = true;
+    sddm.enable = true;
+    autoLogin.user = "alex";
+    sddm.wayland.enable = true;
+  };
   # Enable automatic login for the user.
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "alex";
-  services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
   # services.desktopManager.defaultSession = "plasma";
   # Configure keymap in X11
@@ -158,21 +162,14 @@
   
   users.groups.ubridge = {};
 
-  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
-    # FIXME: Replace with your username
     alex = {
-      # TODO: You can set an initial password for your user.
-      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
-      # Be sure to change it (using passwd) after rebooting!
-      # initialPassword = "correcthorsebatterystaple";
       isNormalUser = true;
       shell = pkgs.fish;
       extraGroups = [ "networkmanager" "wheel" "ubridge" "docker" ];
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
     };
   };
 
@@ -183,10 +180,10 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
-  "beekeeper-studio-5.1.5"
-  "ventoy-1.1.05"
-  "frigate-web-0.15.2"
-  "frigate-0.15.2"
+    "beekeeper-studio-5.1.5"
+    "ventoy-1.1.05"
+    "frigate-web-0.15.2"
+    "frigate-0.15.2"
   ];
 
 
