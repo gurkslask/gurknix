@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  # Reach at localhost:8123
   services.home-assistant = {
     enable = true;
     extraComponents = [
@@ -12,7 +13,6 @@
       default_config = {};
       http = {
         server_port = 8123;
-        trusted_proxies = [ "127.0.0.1" "::1" ];
       };
     };
   };

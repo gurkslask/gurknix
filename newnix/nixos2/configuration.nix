@@ -23,6 +23,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # För att få till flashnings av ESP32
+  services.udev.packages = [ pkgs.esphome ];
 
   networking.hostName = "frejnix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
