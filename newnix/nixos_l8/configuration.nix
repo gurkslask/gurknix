@@ -14,9 +14,6 @@
       ./hardware-configuration.nix
       # ./main-user.nix
       inputs.home-manager.nixosModules.default
-      ../modules/nixos/borg.nix
-      ../modules/nixos/frigate.nix
-        ../modules/nixos/tailscale.nix
     ];
     
 
@@ -24,58 +21,20 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Borg
-  services.myborg = {
-    enable = true;
-    repoPath = "ssh://kagg@kagg-server/mnt/vg0-filer/backup"; 
-  };
 
-  # Frigate
-  services.myfrigate = {
-    enable = false;
-  };
-  
   #Bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   
 
-  # Steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    # dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    # localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
-
   networking.hostName = "laptop8"; # Define your hostname.
-  # services.mullvad-vpn.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Docker
-  virtualisation.docker.enable = true;
-
-
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
-
-  # uBridge gns 3
-  security.wrappers.ubridge = {
-    source = "/run/current-system/sw/bin/ubridge";
-    capabilities = "cap_net_admin,cap_net_raw=ep";
-    owner = "root";
-    group = "ubridge";
-    permissions = "u+rx,g+x";
-  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -111,7 +70,7 @@
   };
   # Enable automatic login for the user.
   services.desktopManager.plasma6.enable = true;
-  # services.desktopManager.defaultSession = "plasma";
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "se";
@@ -121,11 +80,6 @@
   environment.variables = {
     KWIN_DRM_PREFER_COLOR_DEPTH = "24";
   };
-  # programs.hyprland = {
-    # enable = true;
-    # xwayland.enable = true;
-  # };
-
 
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -166,12 +120,30 @@
     admin = {
       isNormalUser = true;
       shell = pkgs.fish;
-      extraGroups = [ "networkmanager" "wheel" "ubridge" "docker" ];
-      openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      ];
+      extraGroups = [ "networkmanager" "wheel" "ubridge" ];
+      initialPassword = "Minne2020";
+
+    elev = {
+      isNormalUser = true;
+      extraGroups = [ ]; # VIKTIGT: Inte med i 'networkmanager'-gruppen
+      initialPassword = "prov";
     };
   };
+
+  # Polkit-regel: Endast användare i 'networkmanager'-gruppen får ändra nätverk
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (action.id.indexOf("org.freedesktop.NetworkManager.") == 0 &&
+          subject.isInGroup("networkmanager")) {
+        return polkit.Result.YES;
+      }
+      
+      // Förbjud allt nätverksrelaterat för alla andra (som 'elev')
+      if (action.id.indexOf("org.freedesktop.NetworkManager.") == 0) {
+        return polkit.Result.NO;
+      }
+    });
+  '';
 
 
   # Install firefox.
@@ -179,12 +151,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.permittedInsecurePackages = [
-    "beekeeper-studio-5.1.5"
-    "ventoy-1.1.05"
-    "frigate-web-0.15.2"
-    "frigate-0.15.2"
-  ];
 
 
   # List packages installed in system profile. To search, run:
@@ -308,9 +274,6 @@
     usbutils # lsusb
     lshw
 
-    # dwarf fortress
-    dwarf-fortress
-    dfhack
 
   ];
   # xdg.portal.enable = true;
@@ -327,7 +290,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-   services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   networking.firewall = rec {
@@ -336,8 +299,6 @@
     allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
     allowedUDPPortRanges = allowedTCPPortRanges;
 };
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -350,59 +311,7 @@
   
   programs.git = {
      enable = true;
-     # userName = "Alexander Svensson";
-     # userEmail = "gurkslask@gmail.com";
   };
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput = {
-    # enable = true;
-    # touchpad = {
-      # disableWhileTyping = true;
-    # };
-  # };
 
-  services.power-profiles-daemon.enable = false;
-  powerManagement.enable = true;
-  services.thermald.enable = true;
-  services.tlp = {
-      enable = true;
-      settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-        CPU_MIN_PERF_ON_AC = 0;
-        CPU_MAX_PERF_ON_AC = 100;
-        CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 75;
-
-       #Optional helps save long term battery health
-      # START_CHARGE_THRESH_BAT0 = 60; # 40 and below it starts to charge
-      # STOP_CHARGE_THRESH_BAT0 = 90; # 80 and above it stops charging
-
-      };
-  };
-  systemd.services.displaylink-server = {
-    enable = true;
-    # Ensure it starts after udev has done its work
-    requires = [ "systemd-udevd.service" ];
-    after = [ "systemd-udevd.service" ];
-    wantedBy = [ "multi-user.target" ]; # Start at boot
-    # *** THIS IS THE CRITICAL 'serviceConfig' BLOCK ***
-    serviceConfig = {
-      Type = "simple"; # Or "forking" if it forks (simple is common for daemons)
-      # The ExecStart path points to the DisplayLinkManager binary provided by the package
-      ExecStart = "${pkgs.displaylink}/bin/DisplayLinkManager";
-      # User and Group to run the service as (root is common for this type of daemon)
-      User = "root";
-      Group = "root";
-      # Environment variables that the service itself might need
-      Environment = [ "DISPLAY=:0" ]; # Might be needed in some cases, but generally not for this
-      Restart = "on-failure";
-      RestartSec = 5; # Wait 5 seconds before restarting
-    };
-  };
  
 }
