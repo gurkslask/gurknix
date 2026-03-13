@@ -38,7 +38,7 @@
     };
   };
   #home.file."${config.xdg.configHome}" = {
-  /*home.file = {
+  home.file = {
     #"$home.homeDirectory" = {
     "nvim" = {
       # source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim;
@@ -48,7 +48,7 @@
       force = true;
       target = "./.config/nvim/lua";
     };
-  };*/
+  };
   # TODO: Set your username
   home = {
     username = "admin";
