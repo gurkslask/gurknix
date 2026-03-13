@@ -133,7 +133,7 @@
   };
 
   # Polkit-regel: Endast användare i 'networkmanager'-gruppen får ändra nätverk
-  security.polkit.extraConfig = ''
+  /* security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
       if (action.id.indexOf("org.freedesktop.NetworkManager.") == 0 &&
           subject.isInGroup("networkmanager")) {
@@ -145,7 +145,7 @@
         return polkit.Result.NO;
       }
     });
-  '';
+  ''; */
 
 
   # Install firefox.
