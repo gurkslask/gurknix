@@ -66,6 +66,7 @@
         home-manager.nixosModules.home-manager  {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+	  home-manager.backupFileExtension = "backup";
           
           # extraSpecialArgs skickar 'inputs' till dina home_alex.nix-filer
           home-manager.extraSpecialArgs = { inherit inputs; };
