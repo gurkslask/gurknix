@@ -124,6 +124,9 @@
     dwarf-fortress
     dfhack
 
+    # nix search
+    nix-search-cli
+
   ];
 }
 
