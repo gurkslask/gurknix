@@ -123,6 +123,7 @@
       shell = pkgs.fish;
       extraGroups = [ "networkmanager" "wheel" "ubridge" ];
       initialPassword = "Minne2020";
+    };
 
     elev = {
       isNormalUser = true;
@@ -197,7 +198,6 @@
     tailscale
     chromium
     spotify
-    ventoy
     # SQLc
     sqlc
     #ESP-Home

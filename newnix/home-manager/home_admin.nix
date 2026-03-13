@@ -38,21 +38,21 @@
     };
   };
   #home.file."${config.xdg.configHome}" = {
-  home.file = {
+  /*home.file = {
     #"$home.homeDirectory" = {
     "nvim" = {
       # source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim;
-      source = config.lib.file.mkOutOfStoreSymlink /home/alex/Projects/gurknix/newnix/dotfiles/nvim/lua;
+      source = config.lib.file.mkOutOfStoreSymlink /home/admin/Projects/gurknix/newnix/dotfiles/nvim/lua;
       #source = ../dotfiles;
       recursive = false;
       force = true;
       target = "./.config/nvim/lua";
     };
-  };
+  };*/
   # TODO: Set your username
   home = {
-    username = "alex";
-    homeDirectory = "/home/alex";
+    username = "admin";
+    homeDirectory = "/home/admin";
   };
 
   # Add stuff for your user as you see fit:
