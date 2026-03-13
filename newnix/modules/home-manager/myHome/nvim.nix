@@ -34,7 +34,7 @@ in
         '';
         plugins = with pkgs.vimPlugins; [
           {
-            plugin = pkgs.unstable.vimPlugins.nvim-treesitter.withAllGrammars;
+            plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
             type = "lua";
             config = ''
               require("config.treesitter")
@@ -198,7 +198,7 @@ in
           ]))
 
           # Lua
-          unstable.lua-language-server
+          lua-language-server
           selene
 
           # Nix

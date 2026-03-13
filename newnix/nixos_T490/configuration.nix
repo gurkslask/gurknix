@@ -13,10 +13,11 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       # ./main-user.nix
-      inputs.home-manager.nixosModules.default
+      # inputs.home-manager.nixosModules.default
       ../modules/nixos/borg.nix
       ../modules/nixos/frigate.nix
-        ../modules/nixos/tailscale.nix
+      ../modules/nixos/tailscale.nix
+      ../modules/nixos/users.nix
     ];
     
 
@@ -189,9 +190,9 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  /*environment.systemPackages = with pkgs; [
     inputs.home-manager.packages.${pkgs.system}.default
-  ];
+  ];*/
   # xdg.portal.enable = true;
   # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 

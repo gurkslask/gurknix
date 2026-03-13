@@ -42,7 +42,6 @@
     tailscale
     chromium
     spotify
-    ventoy
     # SQLc
     sqlc
     #ESP-Home
