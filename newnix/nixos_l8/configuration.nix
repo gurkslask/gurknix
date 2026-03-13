@@ -64,9 +64,9 @@
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager = {
-    autoLogin.enable = true;
+    # autoLogin.enable = true;
     sddm.enable = true;
-    autoLogin.user = "admin";
+    # autoLogin.user = "admin";
     sddm.wayland.enable = true;
   };
   # Enable automatic login for the user.
@@ -132,20 +132,6 @@
     };
   };
 
-  # Polkit-regel: Endast användare i 'networkmanager'-gruppen får ändra nätverk
-  /* security.polkit.extraConfig = ''
-    polkit.addRule(function(action, subject) {
-      if (action.id.indexOf("org.freedesktop.NetworkManager.") == 0 &&
-          subject.isInGroup("networkmanager")) {
-        return polkit.Result.YES;
-      }
-      
-      // Förbjud allt nätverksrelaterat för alla andra (som 'elev')
-      if (action.id.indexOf("org.freedesktop.NetworkManager.") == 0) {
-        return polkit.Result.NO;
-      }
-    });
-  ''; */
 
 
   # Install firefox.
@@ -299,6 +285,10 @@
     allowedUDPPorts = [22];
     allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
     allowedUDPPortRanges = allowedTCPPortRanges;
+    extraCommands = ''
+  iptables -A OUTPUT -m owner --uid-owner elev -j DROP
+  '';
+
 };
 
   # This value determines the NixOS release from which the default
