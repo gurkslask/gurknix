@@ -232,12 +232,11 @@ in
           nodePackages.dockerfile-language-server-nodejs
           nodePackages.vscode-langservers-extracted
           nodePackages.markdownlint-cli
-          taplo-cli
+          taplo
           codespell
           gitlint
           terraform-ls
           actionlint
-          wl-clipboard
           xclip
         ];
       })
