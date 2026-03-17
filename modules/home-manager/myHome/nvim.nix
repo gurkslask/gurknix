@@ -1,0 +1,253 @@
+{ config, lib, pkgs, ... }:
+
+let
+  cfg = config.myHome.neovim;
+in
+{
+  options.myHome.neovim = with lib; {
+    enable = mkEnableOption "neovim";
+    enableLSP = mkEnableOption "enableLSP";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.sessionVariables = {
+      EDITOR = "${config.home.profileDirectory}/bin/nvim";
+    };
+
+    programs.neovim = lib.mkMerge [
+      {
+        enable = true;
+        #package = pkgs.neovim-nightly.overrideAttrs (_: { CFLAGS = "-O3"; });
+        vimAlias = true;
+        viAlias = true;
+        withNodeJs = true;
+        withPython3 = true;
+        withRuby = false;
+        extraConfig = ''
+          let mapleader=" "
+          set clipboard+=unnamedplus
+
+          lua <<EOF
+          require("config.general")
+          require("config.remaps")
+          EOF
+        '';
+        plugins = with pkgs.vimPlugins; [
+          {
+            plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+            type = "lua";
+            config = ''
+              require("config.treesitter")
+          '';
+          }
+          nvim-treesitter-textobjects
+          rainbow-delimiters-nvim
+          {
+            plugin = telescope-nvim;
+            type = "lua";
+            config = ''
+              require("config.telescope")
+            '';
+          }
+          telescope-file-browser-nvim
+          plenary-nvim
+          {
+            plugin = neo-tree-nvim;
+            type = "lua";
+            config = ''
+              require("config.tree")
+            '';
+          }
+          #nvim-web-devicons
+          {
+            plugin = which-key-nvim;
+            type = "lua";
+            config = ''
+              vim.api.nvim_set_option("timeoutlen", 300)
+              require("which-key").setup({})
+            '';
+          }
+          vim-surround
+          # vim-repeat
+
+          {
+          plugin = dashboard-nvim;
+          type = "lua";
+          config = ''
+          require("config.dashboard")
+          '';
+          }
+          {
+            plugin = oceanic-next;
+            type = "lua";
+            config = ''
+              require("config.theme")
+            '';
+          }
+          
+          lualine-nvim
+          nvim-navic
+          {
+            plugin = nvim-colorizer-lua;
+            type = "lua";
+            config = ''
+              require("colorizer").setup()
+            '';
+          }
+          {
+            plugin = dressing-nvim;
+            type = "lua";
+            config = ''
+              require("dressing").setup()
+            '';
+          }
+          popup-nvim
+        ];
+        extraPackages = with pkgs; [
+          # Essentials
+          nodePackages.npm
+          nodePackages.neovim
+
+          # Telescope dependencies
+          ripgrep
+          fd
+        ];
+      }
+
+      (lib.mkIf cfg.enableLSP {
+        plugins = with pkgs.vimPlugins; [
+          (
+            let
+              lspServers = pkgs.writeText "lsp_servers.json" (builtins.toJSON (import ./lsp_servers.nix { inherit pkgs; }));
+            in
+            {
+              plugin = nvim-lspconfig;
+              type = "lua";
+              config = ''
+                require("config.lsp").setup_servers("${lspServers}")
+                require("config.lsp_cmp")
+              '';
+            }
+          )
+          lsp_signature-nvim
+          nvim-code-action-menu
+          {
+            plugin = nvim-cmp;
+            type = "lua";
+            config = ''
+              require("config.lsp_cmp")
+            '';
+          }
+          cmp-path
+          cmp-buffer
+          cmp-nvim-lsp
+          cmp-nvim-lua
+          cmp_luasnip
+          nvim-autopairs
+          # {
+            # plugin = nvim-go;
+            # type = "lua";
+            # config = ''
+              # require('go').setup()
+              # require("config.go")
+              # '';
+          # }
+          {
+            plugin = luasnip;
+            type = "lua";
+            config = ''
+              require("config.snippets")
+            '';
+          }
+          friendly-snippets
+          lspkind-nvim
+          # {
+          # plugin = null-ls-nvim;
+          # type = "lua";
+          # config = ''
+          # require("config.language")
+          # '';
+          # }
+          {
+            plugin = nvim-dap;
+            type = "lua";
+            config = ''
+              require("config.debug")
+            '';
+          }
+          nvim-dap-ui
+          nvim-dap-go
+          nvim-dap-python
+          {
+            plugin = refactoring-nvim;
+            type = "lua";
+            config = ''
+              require("config.refactoring")
+            '';
+          }
+        ];
+        extraPackages = with pkgs; [
+          # Python
+          (python3.withPackages (ps: with ps; [
+            setuptools # Required by pylama for some reason
+            pylama
+            black
+            isort
+            yamllint
+            debugpy
+          ]))
+
+          # Lua
+          lua-language-server
+          selene
+
+          # Nix
+          statix
+          nixpkgs-fmt
+          nil
+
+          # C, C++
+          clang-tools
+          cppcheck
+
+          # Shell scripting
+          shfmt
+          shellcheck
+          shellharden
+
+          # JavaScript
+          nodePackages.prettier
+          nodePackages.eslint
+          nodePackages.typescript-language-server
+
+          # Go
+          go
+          gopls
+          golangci-lint
+          delve
+
+          # Additional
+          nodePackages.bash-language-server
+          nodePackages.yaml-language-server
+          nodePackages.dockerfile-language-server-nodejs
+          nodePackages.vscode-langservers-extracted
+          nodePackages.markdownlint-cli
+          taplo
+          codespell
+          gitlint
+          terraform-ls
+          actionlint
+          xclip
+        ];
+      })
+    ];
+
+    #xdg.configFile.nvim = {
+      #recursive = true;
+      
+      #source = ../../../dotfiles/nvim;
+      #source = ../../../../dotfiles/nvim;
+    #};
+  };
+}
+
