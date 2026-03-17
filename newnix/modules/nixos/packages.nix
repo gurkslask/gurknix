@@ -126,6 +126,9 @@
     # nix search
     nix-search-cli
 
+    # markdown previeew
+    marksman
+
   ];
 }
 
