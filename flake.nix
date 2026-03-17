@@ -2,24 +2,16 @@
   description = "Your new nix config";
 
   inputs = {
-    # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    # You can access packages and modules from different nixpkgs revs
-    # at the same time. Here's an working example:
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
-
-    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    # Home manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, nix-darwin, home-manager, ... }: 
-
+  outputs = inputs @ { self, nix-darwin, nixpkgs, home-manager, ... }: 
   let
     nixpkgsConfig = {
       config.allowUnfree = true;
@@ -36,15 +28,16 @@
     # Available through 'nixos-rebuild --flake .#your-hostname'
     darwinConfigurations."alex" = nix-darwin.lib.darwinSystem {
       # Alexs-Macbook = nixpkgs.lib.nixosSystem {
-      # specialArgs = {inherit inputs ;};
+      specialArgs = {inherit inputs ;};
       modules = [
         # > Our main nixos configuration file <
 	configuration
         ./mac/configuration.nix
-        inputs.home-manager.nixosModules.home-manager  {
+        inputs.home-manager.darwinModules.home-manager  {
 	  nixpkgs = nixpkgsConfig;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+	  home-manager.backupFileExtension = "backup";
           # extraSpecialArgs skickar 'inputs' till dina home_alex.nix-filer
           # home-manager.extraSpecialArgs = { inherit inputs; };
           # Här kopplar vi dina användare till deras HM-filer

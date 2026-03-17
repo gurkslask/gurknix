@@ -22,13 +22,38 @@
 
   users.users.alex = {
     home = "/Users/alex";
+    shell = pkgs.fish;
   };
 
   system.primaryUser = "alex";
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages =
-  [ pkgs.vim
+  environment.systemPackages = with pkgs;
+  [ 
+    vim
+    git
+    fish
+    neovim
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    linode-cli
+    sshpass
+    spotdl
+    ansible
+    tmux
+    # steam
+    go
+    hugo
+    fastfetch
+    nnn # terminal file manager
+    gotools
+    ripgrep # recursively searches directories for a regex pattern
+    jq # A lightweight and flexible command-line JSON processor
+    yq-go # yaml processor https://github.com/mikefarah/yq
+    eza # A modern replacement for ‘ls’
+    fzf # A command-line fuzzy finder
+    nix-output-monitor
+    nix-search-cli
   ];
   
   # Necessary for using flakes on this system.
@@ -36,7 +61,7 @@
   nix.enable = false;
   
   # Enable alternative shell support in nix-darwin.
-  # programs.fish.enable = true;
+  programs.fish.enable = true;
   
   # Set Git commit hash for darwin-version.
   # system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -53,16 +78,10 @@
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
-
-  programs.fish.enable = true;
-  
-
-
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
    services.openssh.enable = true;
 
 
- 
 }

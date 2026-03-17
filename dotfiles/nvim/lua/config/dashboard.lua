@@ -1,18 +1,1 @@
-local header = {
-	"",
-	"███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗",
-	"████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║",
-	"██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║",
-	"██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║",
-	"██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║",
-	"╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝",
-	"",
-}
-
-require("dashboard").setup({
-	theme = "hyper",
-	config = {
-		header = header,
-		packages = { enable = false },
-	}
-})
+/nix/store/zmcp0wdch2jb6vx67c58x7qb2wwgwz8a-home-manager-files/.config/nvim/lua/config/dashboard.lua

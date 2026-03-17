@@ -1,7 +1,1 @@
-local luasnip = require("luasnip")
-luasnip.setup({
-	region_check_events = "CursorMoved",
-})
-
--- Friendly snippets
-require("luasnip.loaders.from_vscode").lazy_load()
+/nix/store/zmcp0wdch2jb6vx67c58x7qb2wwgwz8a-home-manager-files/.config/nvim/lua/config/snippets.lua

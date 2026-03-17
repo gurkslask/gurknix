@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  flakePath = "${config.home.homeDirectory}/Projects/gurknix";
+in
 
 {
   imports = [
@@ -20,16 +23,18 @@
       #enabbdsa = true;
     };
   };
+  /*
   home.file = {
-    #"$home.homeDirectory" = {
-    "nvim" = {
-      # source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim;
-      source = config.lib.file.mkOutOfStoreSymlink /home/alex/Projects/gurknix/newnix/dotfiles/nvim/lua;
-      #source = ../dotfiles;
-      recursive = false;
-      force = true;
-      target = "./.config/nvim/lua";
+      "nvim-config" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${flakePath}/dotfiles/nvim/lua";
+        target = ".config/nvim/lua";
+        recursive = false;
     };
+  };
+  */
+  home.file.".config/nvim" = {
+    source = ../dotfiles/nvim; # Peka på hela nvim-mappen i ditt repo
+    recursive = true;          # Detta kopierar in allt i Nix Store
   };
   programs.fish = {
     enable = true;
