@@ -30,6 +30,7 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs;
   [ 
+    tree-sitter
     vim
     git
     fish

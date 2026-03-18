@@ -32,10 +32,12 @@ in
     };
   };
   */
+  /*
   home.file.".config/nvim" = {
     source = ../dotfiles/nvim; # Peka på hela nvim-mappen i ditt repo
     recursive = true;          # Detta kopierar in allt i Nix Store
   };
+  */
   programs.fish = {
     enable = true;
     interactiveShellInit = ''

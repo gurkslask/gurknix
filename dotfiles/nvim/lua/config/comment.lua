@@ -1,1 +1,17 @@
-/nix/store/zmcp0wdch2jb6vx67c58x7qb2wwgwz8a-home-manager-files/.config/nvim/lua/config/comment.lua
+require("Comment").setup({
+	toggler = {
+		line = "",
+	},
+	mappings = {
+		basic = true,
+		extra = false,
+		extended = false,
+	}
+})
+
+vim.api.nvim_set_keymap(
+	"v",
+	"",
+	'<esc><cmd>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<cr>',
+	{}
+)

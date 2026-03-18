@@ -241,6 +241,11 @@ in
         ];
       })
     ];
+    # xdg.configFile."nvim".source = ../../../dotfiles/nvim/lua;
+    xdg.configFile."nvim" = {
+      recursive = true;
+      source = ../../../dotfiles/nvim/lua;
+    };
 
     #xdg.configFile.nvim = {
       #recursive = true;

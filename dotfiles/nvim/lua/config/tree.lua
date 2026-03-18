@@ -1,1 +1,11 @@
-/nix/store/zmcp0wdch2jb6vx67c58x7qb2wwgwz8a-home-manager-files/.config/nvim/lua/config/tree.lua
+vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>Neotree<cr>", {})
+require("neo-tree").setup({
+	update_focused_file = {
+		enable = true,
+	},
+	view = {
+		width = 180,
+		number = true,
+		relativenumber = true,
+	},
+})
