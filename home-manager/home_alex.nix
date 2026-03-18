@@ -38,22 +38,19 @@
     };
   };
   #home.file."${config.xdg.configHome}" = {
-  home.file = {
-    #"$home.homeDirectory" = {
-    "nvim" = {
-      # source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim;
-      source = config.lib.file.mkOutOfStoreSymlink /home/alex/Projects/gurknix/newnix/dotfiles/nvim/lua;
-      #source = ../dotfiles;
-      recursive = false;
-      force = true;
-      target = "./.config/nvim/lua";
-    };
-  };
-  # TODO: Set your username
   home = {
     username = "alex";
     homeDirectory = "/home/alex";
+    file = {
+    #"$home.homeDirectory" = {
+      "nvim" = {
+        source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim/lua/config;
+        recursive = false;
+        target = "./.config/nvim/lua/";
+      };
+    };
   };
+  # TODO: Set your username
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
