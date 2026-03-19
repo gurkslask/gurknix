@@ -25,6 +25,12 @@
     shell = pkgs.fish;
   };
 
+  home-manager.users.alex = {
+    # KRITISKT: Detta tvingar HM att använda rätt stig oavsett sudo
+    home.username = "alex";
+    home.homeDirectory = "/Users/alex";
+  };
+
   system.primaryUser = "alex";
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget

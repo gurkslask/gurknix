@@ -23,6 +23,22 @@ in
       #enabbdsa = true;
     };
   };
+  home= {
+    username = "alex";
+    homeDirectory = "/Users/alex";
+    #"$home.homeDirectory" = {
+    file = {
+      "nvim" = {
+        # source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim;
+        source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim/lua;
+        #source = ../dotfiles;
+        recursive = false;
+        target = "./.config/nvim/lua/";
+      };
+    };
+  };
+
+    
   /*
   home.file = {
       "nvim-config" = {
@@ -38,6 +54,8 @@ in
     recursive = true;          # Detta kopierar in allt i Nix Store
   };
   */
+
+# Detta injicerar variablerna i ditt skal (zsh/bash)
   programs.fish = {
     enable = true;
     interactiveShellInit = ''

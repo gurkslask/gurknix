@@ -1,4 +1,4 @@
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter.config").setup({
 	auto_install = false, -- Parsers are managed by Nix
 	indent = {
 		enable = true,
