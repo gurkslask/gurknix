@@ -2,40 +2,33 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+# --- Install Home manager
+#sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz home-manager
+#sudo nix-channel --update
+
+{ config, pkgs, inputs, ...  }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      #./home-manager.nix
       inputs.home-manager.nixosModules.default
-      # inputs.plasma-manager.homeManagerModules.plasma-manager
+      ../modules/nixos/homeassistant.nix
+      ../modules/nixos/esphome.nix
     ];
+    
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
-  #Bluetooth
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  
 
-  # Steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
+  
+  # För att få till flashnings av ESP32
+  services.udev.packages = [ pkgs.esphome ];
+  services.myesphome.enable = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  services.tailscale.enable = true;
+  networking.hostName = "frejnix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Docker
-  virtualisation.docker.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -46,6 +39,15 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
+
+  # uBridge gns 3
+  security.wrappers.ubridge = {
+    source = "/run/current-system/sw/bin/ubridge";
+    capabilities = "cap_net_admin,cap_net_raw=ep";
+    owner = "root";
+    group = "ubridge";
+    permissions = "u+rx,g+x";
+  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -61,37 +63,39 @@
     LC_TELEPHONE = "sv_SE.UTF-8";
     LC_TIME = "sv_SE.UTF-8";
   };
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
-  # Disable touchpad while typing
-  services.libinput.touchpad.disableWhileTyping = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  #services.xserver.desktopManager.plasma5.enable = true;
+  # services.displayManager.sddm.enable = true;
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "alex";
   services.desktopManager.plasma6.enable = true;
-
+  # services.xserver.desktopManager.plasma5.enable = true;
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "se";
     variant = "";
   };
-  #Displaysink
-  #services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
-  services.xserver.videoDrivers = [  "modesetting" ];
+
+  # programs.hyprland = {
+    # enable = true;
+    # xwayland.enable = true;
+  # };
+
 
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Configure console keymap
   console.keyMap = "sv-latin1";
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
   # Enable sound with pipewire.
+  # sound.enable = true; Removed
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -108,61 +112,53 @@
   };
 
 
-  # Fish terminal
   programs.fish.enable = true;
+  
+  users.groups.ubridge = {};
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.alex = {
-    isNormalUser = true;
-    description = "alex";
-    shell = pkgs.fish;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
-      kdePackages.kate
-      firefox
-      neovim
-      hugo
-      git
-      go
-      fzf
-    #  thunderbird
-    ];
+  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
+  users.users = {
+    # FIXME: Replace with your username
+    alex = {
+      # TODO: You can set an initial password for your user.
+      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
+      # Be sure to change it (using passwd) after rebooting!
+      # initialPassword = "correcthorsebatterystaple";
+      isNormalUser = true;
+      shell = pkgs.fish;
+      extraGroups = [ "networkmanager" "wheel" "ubridge" ];
+      openssh.authorizedKeys.keys = [
+        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
+      ];
+      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
+    };
   };
 
-  home-manager = {
-     extraSpecialArgs = { inherit inputs; };
-     users = {
-     	alex = import ./home.nix;
-     };
-  };
-
-  # Enable automatic login for the user.
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "alex";
-
-  # Install firefox.
-  programs.firefox.enable = true;
-
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.permittedInsecurePackages = [
-  "beekeeper-studio-5.1.5"
-  ];
-  services.mullvad-vpn.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-  # plasma-manager
-    transmission_4
+    inputs.home-manager.packages.${pkgs.system}.default
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    neovim
+    wget
+    #gns3
+    gns3-server
+    ubridge
+    dynamips
+    putty
+    vpcs
     gcc
     linode-cli
-    typescript-language-server
-    beekeeper-studio
-    #vlc
-    vlc
-    # From home manager
+    # File manager
+    # dolphin
+    # Network manager
+    # networkmanagerapplet
+    # tlp
+    tlp
+    # Bluetooth
+    # blueman
     gimp
     sshpass
     mixxx
@@ -248,10 +244,9 @@
     pciutils # lspci
     usbutils # lsusb
 
-    # Steam
-    # steam
-
   ];
+  # xdg.portal.enable = true;
+  # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -264,11 +259,11 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 22 ];
-  networking.firewall.allowedUDPPorts = [ 22 ];
+   networking.firewall.allowedTCPPorts = [80 22];
+   networking.firewall.allowedUDPPorts = [22];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -278,13 +273,38 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment?
 
+  
   programs.git = {
      enable = true;
      # userName = "Alexander Svensson";
      # userEmail = "gurkslask@gmail.com";
   };
+  # Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    # localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
+  services.tailscale.enable = true;
+  # Docker
+  virtualisation.docker.enable = true;
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.libinput = {
+    # enable = true;
+    # touchpad = {
+      # disableWhileTyping = true;
+    # };
+  # };
+  # Install firefox.
+  programs.firefox.enable = true;
+  nixpkgs.config.permittedInsecurePackages = [
+  "ventoy-1.1.05"
+  "beekeeper-studio-5.1.5"
+  ];
+
   services.power-profiles-daemon.enable = false;
   powerManagement.enable = true;
   services.thermald.enable = true;
@@ -308,4 +328,5 @@
 
       };
   };
+ 
 }
