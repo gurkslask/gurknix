@@ -44,7 +44,7 @@
     file = {
     #"$home.homeDirectory" = {
       "nvim" = {
-        source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim/lua/config;
+        source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim/lua;
         recursive = false;
         target = "./.config/nvim/lua/";
       };
