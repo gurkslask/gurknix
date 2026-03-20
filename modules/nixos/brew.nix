@@ -14,6 +14,8 @@ homebrew = {
     "discord"
     "steam"
     "whisky"
+    "mixxx"
+    "1password"
   ];
 };
 }
