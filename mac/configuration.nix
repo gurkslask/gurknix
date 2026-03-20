@@ -26,14 +26,11 @@
   };
 
   home-manager.users.alex = {
-    # KRITISKT: Detta tvingar HM att använda rätt stig oavsett sudo
     home.username = "alex";
     home.homeDirectory = "/Users/alex";
   };
 
   system.primaryUser = "alex";
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs;
   [ 
     tree-sitter
@@ -43,6 +40,7 @@
     neovim
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
     linode-cli
     sshpass
     spotdl
@@ -70,9 +68,27 @@
   # Enable alternative shell support in nix-darwin.
   programs.fish.enable = true;
   
+  # Enable homebrew
   homebrew.enable = true;
-  # Set Git commit hash for darwin-version.
-  # system.configurationRevision = self.rev or self.dirtyRev or null;
+
+  system.defaults = {
+    dock = {
+      autohide = true;
+      mru-spaces = false; # Sluta flytta runt på dina Spaces automatiskt
+      show-recents = false; # Städa bort de tre senaste apparna från Dockan
+      static-only = true; # Visa bara appar som faktiskt körs
+    };
+    finder = {
+      AppleShowAllExtensions = true;
+      FXEnableExtensionChangeWarning = false; # Sluta varna när du byter filändelse
+      _FXShowPosixPathInTitle = true; # Visa hela sökvägen i Finder-fönstret
+    };
+    NSGlobalDomain = {
+      ApplePressAndHoldEnabled = false; # Gör så att man kan "spamma" tangenter (viktigt för Vim!)
+      InitialKeyRepeat = 15; # Snabbare tangent-respons
+      KeyRepeat = 2;
+    };
+  };
   
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

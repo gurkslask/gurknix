@@ -11,6 +11,9 @@ homebrew = {
     "visual-studio-code"
     "stats"
     "spotify" # Man måste ju ha musik när man kodar
+    "discord"
+    "steam"
+    "whisky"
   ];
 };
 }
