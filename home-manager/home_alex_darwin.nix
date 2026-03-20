@@ -1,7 +1,4 @@
 { config, pkgs, ... }:
-let
-  flakePath = "${config.home.homeDirectory}/Projects/gurknix";
-in
 
 {
   imports = [
@@ -67,10 +64,19 @@ in
       nrs = "sudo nixos-rebuild switch";
     };
   };
-  home.stateVersion = "23.11";
+  programs.git = {
+    enable = true;
+    settings = {
+      user.name = "alexander svensson";
+      user.email = "gurkslask@gmail.com";
+      init.defaultBranch = "main";
+      core.editor = "nvim";
+    };
+  };
+    home.stateVersion = "23.11";
 
-  home.packages = with pkgs; [
-    htop
-  ];
+    home.packages = with pkgs; [
+      htop
+    ];
 
-}
+  }

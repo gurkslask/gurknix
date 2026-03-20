@@ -1,5 +1,5 @@
 local lsp = {}
-local lsp_config = require("lspconfig")
+-- local lsp_config = require('lspconfig')
 local lsp_signature = require("lsp_signature")
 local navic = require("nvim-navic")
 local common_capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -53,7 +53,7 @@ function lsp.common_on_attach(client, bufnr)
 	client.server_capabilities.semanticTokensProvider = nil
 
 	-- Disable tsserver formatting, as it conflicts with prettier
-	if client.name == "tsserver" then
+	if client.name == "ts_ls" then
 		client.server_capabilities.documentFormattingProvider = false
 	end
 end
@@ -79,7 +79,12 @@ function lsp.setup_servers(json_config)
 		config.on_attach = lsp.common_on_attach
 		config.capabilities = common_capabilities
 		config.capabilities.offsetEncoding = { "utf-16" }
-		lsp_config[server].setup(config)
+		if vim.lsp.config then
+			vim.lsp.config(server, config)
+			vim.lsp.enable(server)
+		else
+			require('lspconfig')[server].setup(config)
+		end
 	end
 end
 
