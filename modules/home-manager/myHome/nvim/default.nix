@@ -41,6 +41,7 @@ in
           '';
           }
           nvim-treesitter-textobjects
+          markdown-preview-nvim
           nvim-ts-rainbow
           {
             plugin = telescope;

@@ -16,6 +16,7 @@ homebrew = {
     "whisky"
     "mixxx"
     "1password"
+    "vlc"
   ];
 };
 }
