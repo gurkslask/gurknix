@@ -5,7 +5,7 @@
 
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
-    fira-code-nerdfont
+    nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     grc
     displaylink
@@ -53,7 +53,7 @@
     pyright
     hugo
     vscodium
-    neofetch
+    fastfetch
     nnn # terminal file manager
     gotools
 
