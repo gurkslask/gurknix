@@ -15,6 +15,7 @@
       ../modules/nixos/frigate.nix
       ../modules/nixos/tailscale.nix
       ../modules/nixos/users.nix
+      ../modules/nixos/packages.nix
     ];
     
 
