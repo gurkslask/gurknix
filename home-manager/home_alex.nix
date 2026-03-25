@@ -1,9 +1,7 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
+{ config, pkgs, ... }:
 {
-  config,
-  ...
-}: {
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -44,20 +42,12 @@
     file = {
     #"$home.homeDirectory" = {
       "nvim" = {
-        source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim/lua/config;
+        source = config.lib.file.mkOutOfStoreSymlink ../dotfiles/nvim/lua;
         recursive = false;
         target = "./.config/nvim/lua/";
       };
     };
   };
-  # TODO: Set your username
-
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
-
-  # Enable home-manager and git
-  # programs.home-manager.enable = true;
   programs.git = {
     enable = true;
     userName = "Alexander Svensson";
