@@ -60,17 +60,17 @@
   # programs.home-manager.enable = true;
   programs.git = {
     enable = true;
-    userName = "Alexander Svensson";
-    userEmail = "gurkslask@gmail.com";
-    aliases = {
-      gs = "status";
-      co = "checkout";
-      gc = "commit";
-      glog = "log --oneline --graph --decorate --all";
-    };
-    extraConfig = {
+    settings = {
       init.defaultBranch = "main";
       core.editor = "nvim";
+      user.name = "Alexander Svensson";
+      user.email = "gurkslask@gmail.com";
+      alias = {
+        gs = "status";
+        co = "checkout";
+        gc = "commit";
+        glog = "log --oneline --graph --decorate --all";
+      };
     };
   };
 
