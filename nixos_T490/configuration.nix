@@ -16,12 +16,14 @@
       ../modules/nixos/tailscale.nix
       ../modules/nixos/users.nix
       ../modules/nixos/packages.nix
+      ../modules/nixos/niri.nix
     ];
     
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelParams = [ "mem_sleep_default=deep" ];
 
   # Borg
   services.myborg = {
@@ -48,6 +50,8 @@
   };
 
   networking.hostName = "jenna"; # Define your hostname.
+  networking.nameservers = ["1.1.1.1" "8.8.8.8"];
+
   # services.mullvad-vpn.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -239,29 +243,9 @@
     # };
   # };
 
-  services.power-profiles-daemon.enable = false;
+  services.power-profiles-daemon.enable = true;
   powerManagement.enable = true;
   services.thermald.enable = true;
-  services.tlp = {
-      enable = true;
-      settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-        CPU_MIN_PERF_ON_AC = 0;
-        CPU_MAX_PERF_ON_AC = 100;
-        CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 75;
-
-       #Optional helps save long term battery health
-      # START_CHARGE_THRESH_BAT0 = 60; # 40 and below it starts to charge
-      # STOP_CHARGE_THRESH_BAT0 = 90; # 80 and above it stops charging
-
-      };
-  };
   systemd.services.displaylink-server = {
     enable = true;
     # Ensure it starts after udev has done its work
@@ -282,5 +266,25 @@
       RestartSec = 5; # Wait 5 seconds before restarting
     };
   };
+  /* services.tlp = {
+      enable = true;
+      settings = {
+        # CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        # CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+        # CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+        # CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+        # CPU_MIN_PERF_ON_AC = 0;
+        # CPU_MAX_PERF_ON_AC = 100;
+        # CPU_MIN_PERF_ON_BAT = 0;
+        # CPU_MAX_PERF_ON_BAT = 75;
+
+       #Optional helps save long term battery health
+      # START_CHARGE_THRESH_BAT0 = 60; # 40 and below it starts to charge
+      # STOP_CHARGE_THRESH_BAT0 = 90; # 80 and above it stops charging
+
+      };
+  };*/
  
 }

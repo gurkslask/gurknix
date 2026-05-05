@@ -9,9 +9,18 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @ { self, nix-darwin, nixpkgs, home-manager, ... }: 
+  outputs = inputs @ { self, nix-darwin, nixpkgs,
+  home-manager, niri, noctalia, ... }: 
   let
     nixpkgsConfig = {
       config.allowUnfree = true;
@@ -34,10 +43,10 @@
 	configuration
         ./mac/configuration.nix
         inputs.home-manager.darwinModules.home-manager  {
-	  nixpkgs = nixpkgsConfig;
+          nixpkgs = nixpkgsConfig;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-	  home-manager.backupFileExtension = "backup";
+          home-manager.backupFileExtension = "backup";
           # extraSpecialArgs skickar 'inputs' till dina home_alex.nix-filer
           # home-manager.extraSpecialArgs = { inherit inputs; };
           # Här kopplar vi dina användare till deras HM-filer
@@ -52,16 +61,16 @@
         modules = [
           # > Our main nixos configuration file <
           ./nixos_T490/configuration.nix
-        home-manager.nixosModules.home-manager  {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          
-          # extraSpecialArgs skickar 'inputs' till dina home_alex.nix-filer
-          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.nixosModules.home-manager  {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            
+            # extraSpecialArgs skickar 'inputs' till dina home_alex.nix-filer
+            home-manager.extraSpecialArgs = { inherit inputs; };
 
-          # Här kopplar vi dina användare till deras HM-filer
-          home-manager.users.alex = import ./home-manager/home_alex.nix;
-        }
+            # Här kopplar vi dina användare till deras HM-filer
+            home-manager.users.alex = import ./home-manager/home_alex.nix;
+          }
         ];
       };
       frejnix = nixpkgs.lib.nixosSystem {
