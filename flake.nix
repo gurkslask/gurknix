@@ -69,7 +69,7 @@
         specialArgs = {inherit inputs ;};
         modules = [
           # > Our main nixos configuration file <
-          ./nixos_T490/configuration.nix
+          ./nixos2/configuration.nix
         home-manager.nixosModules.home-manager  {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;

@@ -169,7 +169,6 @@
     tailscale
     chromium
     spotify
-    ventoy
     # SQLc
     sqlc
     #ESP-Home
@@ -180,7 +179,6 @@
     python3
     hugo
     vscodium
-    neofetch
     nnn # terminal file manager
     gotools
 
