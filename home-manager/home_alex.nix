@@ -1,6 +1,6 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{ config, pkgs, ... }:
+{ config, inputs, lib, ... }:
 {
   # You can import other home-manager modules here
   imports = [
@@ -13,6 +13,10 @@
     ../modules/home-manager/myHome/nvim.nix
     ../modules/home-manager/myHome/kdeconnect.nix
     ../modules/home-manager/myHome/shell.nix
+    ../modules/home-manager/myHome/niri.nix
+    # ../modules/home-manager/myHome/waybar.nix
+
+    # lib.mkDefault inputs.noctalia.homeModules.default
 
     
   ];
@@ -50,6 +54,7 @@
   };
   programs.git = {
     enable = true;
+    signing.format = "openpgp";
     settings = {
       init.defaultBranch = "main";
       core.editor = "nvim";
@@ -75,6 +80,7 @@
       nrs = "sudo nixos-rebuild switch";
     };
   };
+
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

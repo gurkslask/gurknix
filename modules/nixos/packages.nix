@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    powertop
 
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
@@ -125,6 +126,17 @@
 
     # nix search
     nix-search-cli
+
+    # Python package manager
+    uv
+    
+    vlc
+    # Image viewer
+    qimgv
+
+    # Rust
+    rustc
+    cargo
 
   ];
 }
