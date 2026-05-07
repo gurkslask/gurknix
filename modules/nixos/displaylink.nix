@@ -4,8 +4,8 @@ let
   cfg = config.services.mydisplaylink;
 in
 {
-  options.services.myborg = with lib; {
-    enable = mkEnableOption "borg";
+  options.services.mydisplaylink = with lib; {
+    enable = mkEnableOption "displaylink";
   };
 
   config = lib.mkIf cfg.enable {
@@ -27,6 +27,7 @@ in
         Environment = [ "DISPLAY=:0" ]; # Might be needed in some cases, but generally not for this
         Restart = "on-failure";
         RestartSec = 5; # Wait 5 seconds before restarting
+      };
     };
   };
 }
