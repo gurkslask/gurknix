@@ -17,6 +17,7 @@
       ../modules/nixos/users.nix
       ../modules/nixos/packages.nix
       ../modules/nixos/niri.nix
+      ../modules/nixos/displaylink.nix
     ];
     
 
@@ -30,6 +31,8 @@
     enable = true;
     repoPath = "ssh://kagg@kagg-server/mnt/vg0-filer/backup"; 
   };
+
+  services.mydisplaylink.enable = false;
 
   # Frigate
   services.myfrigate = {
@@ -246,6 +249,8 @@
   services.power-profiles-daemon.enable = true;
   powerManagement.enable = true;
   services.thermald.enable = true;
+  
+  /*
   systemd.services.displaylink-server = {
     enable = true;
     # Ensure it starts after udev has done its work
@@ -266,6 +271,7 @@
       RestartSec = 5; # Wait 5 seconds before restarting
     };
   };
+  */
   /* services.tlp = {
       enable = true;
       settings = {
