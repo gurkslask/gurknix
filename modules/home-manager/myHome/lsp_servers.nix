@@ -8,7 +8,7 @@
   terraformls = { };
   gopls = { };
   ts_ls = {
-    init_options.tsserver.path = "${pkgs.nodePackages.typescript}/bin/tsserver";
+    # init_options.tsserver.path = "${pkgs.nodePackages.typescript}/bin/tsserver";
   };
   taplo = { };
   cssls = { };

@@ -104,10 +104,6 @@ in
           popup-nvim
         ];
         extraPackages = with pkgs; [
-          # Essentials
-          nodePackages.npm
-          nodePackages.neovim
-
           # Telescope dependencies
           ripgrep
           fd
@@ -216,9 +212,9 @@ in
           shellharden
 
           # JavaScript
-          nodePackages.prettier
-          nodePackages.eslint
-          nodePackages.typescript-language-server
+          prettier
+          eslint
+          typescript-language-server
 
           # Go
           go
@@ -227,11 +223,11 @@ in
           delve
 
           # Additional
-          nodePackages.bash-language-server
-          nodePackages.yaml-language-server
-          nodePackages.dockerfile-language-server-nodejs
-          nodePackages.vscode-langservers-extracted
-          nodePackages.markdownlint-cli
+          bash-language-server
+          yaml-language-server
+          dockerfile-language-server-nodejs
+          vscode-langservers-extracted
+          markdownlint-cli
           taplo
           codespell
           gitlint

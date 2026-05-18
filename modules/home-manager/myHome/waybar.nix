@@ -33,7 +33,8 @@
         format-ethernet = "󰈀  {ifname}";
         format-disconnected = "⚠  Disconnected";
         tooltip-format = "{ifname} via {gwaddr}";
-        on-click = "nm-connection-editor"; # Öppnar KDE:s nätverksinställningar
+        on-click = "plasmawindowed org.kde.plasma.networkmanagement
+"; # Öppnar KDE:s nätverksinställningar
       };
 
       "pulseaudio" = {
@@ -42,7 +43,7 @@
         format-icons = {
           default = [ "" "" "" ];
         };
-        on-click = "systemsettings5 kcm_pulseaudio"; # Direkt in i KDE ljudinställningar
+        on-click = " plasmawindowed org.kde.plasma.volume";
       };
 
       "battery" = {

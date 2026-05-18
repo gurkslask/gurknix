@@ -13,7 +13,7 @@
     ../modules/home-manager/myHome/nvim.nix
     ../modules/home-manager/myHome/kdeconnect.nix
     ../modules/home-manager/myHome/shell.nix
-    ../modules/home-manager/myHome/niri.nix
+    # ../modules/home-manager/myHome/niri.nix
     # ../modules/home-manager/myHome/waybar.nix
 
     # lib.mkDefault inputs.noctalia.homeModules.default

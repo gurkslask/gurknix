@@ -16,7 +16,7 @@
       ../modules/nixos/tailscale.nix
       ../modules/nixos/users.nix
       ../modules/nixos/packages.nix
-      ../modules/nixos/niri.nix
+      # ../modules/nixos/niri.nix
       ../modules/nixos/displaylink.nix
     ];
     
@@ -24,7 +24,8 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelParams = [ "mem_sleep_default=deep" ];
+  boot.kernelParams = [ "mem_sleep_default=s2idle" ];
+  # boot.kernelParams = [ "mem_sleep_default=deep" ];
 
   # Borg
   services.myborg = {

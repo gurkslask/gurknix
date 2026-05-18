@@ -125,8 +125,10 @@ in
         ];
         extraPackages = with pkgs; [
           # Essentials
-          nodePackages.npm
-          nodePackages.neovim
+          # nodePackages.npm
+          
+          # nodePackages.neovim
+          
 
           # Telescope dependencies
           ripgrep
@@ -217,7 +219,7 @@ in
             yamllint
             debugpy
           ]))
-          nodePackages.pyright
+          # nodePackages.pyright
 
           # Lua
           unstable.lua-language-server
@@ -238,9 +240,9 @@ in
           shellharden
 
           # JavaScript
-          nodePackages.prettier
-          nodePackages.eslint
-          nodePackages.typescript-language-server
+          # nodePackages.prettier
+          # nodePackages.eslint
+          # nodePackages.typescript-language-server
 
           # Go
           go
@@ -249,11 +251,11 @@ in
           delve
 
           # Additional
-          nodePackages.bash-language-server
-          nodePackages.yaml-language-server
-          nodePackages.dockerfile-language-server-nodejs
-          nodePackages.vscode-langservers-extracted
-          nodePackages.markdownlint-cli
+          # nodePackages.bash-language-server
+          # nodePackages.yaml-language-server
+          # nodePackages.dockerfile-language-server-nodejs
+          # nodePackages.vscode-langservers-extracted
+          # nodePackages.markdownlint-cli
           taplo-cli
           codespell
           gitlint

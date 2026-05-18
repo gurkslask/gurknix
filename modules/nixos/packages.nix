@@ -4,6 +4,9 @@
   environment.systemPackages = with pkgs; [
     powertop
 
+    # Remmina for mstsc remote desktop
+    # remmina
+
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
     nerd-fonts.fira-code
@@ -14,8 +17,6 @@
     wget
     minicom
     nfs-utils
-    # Remmina
-    remmina
     #gns3
     gns3-server
     ubridge
