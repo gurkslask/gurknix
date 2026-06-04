@@ -174,13 +174,6 @@ in
           nvim-dap-ui
           nvim-dap-go
           nvim-dap-python
-          {
-            plugin = refactoring-nvim;
-            type = "lua";
-            config = ''
-              require("config.refactoring")
-            '';
-          }
         ];
         extraPackages = with pkgs; [
           # Python
